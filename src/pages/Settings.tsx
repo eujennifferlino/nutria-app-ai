@@ -1,29 +1,35 @@
 
-import { User, Bell, Shield, Palette, Database } from "lucide-react";
+import { User, Bell, Shield, Palette, Database, Moon, Sun } from "lucide-react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
+import { useTheme } from "@/contexts/ThemeContext";
+import PageWrapper from "@/components/PageWrapper";
 
 const Settings = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-nutria-50 via-blue-50 to-purple-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Configurações</h1>
-          <p className="text-gray-600">
-            Gerencie suas preferências e configurações da conta
-          </p>
-        </div>
+  const { theme, toggleTheme } = useTheme();
 
-        <div className="grid lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            {/* Perfil */}
-            <Card className="glass-card border-0 shadow-lg">
+  return (
+    <PageWrapper 
+      title="Configurações" 
+      subtitle="Gerencie suas preferências e configurações da conta"
+      showBackButton={true}
+    >
+      <div className="grid lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
+          {/* Perfil */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <Card className="glass-card border-0 shadow-lg dark:bg-gray-800/50">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center space-x-2 font-poppins">
                   <User className="w-5 h-5 text-nutria-600" />
                   <span>Informações do Perfil</span>
                 </CardTitle>
@@ -31,28 +37,34 @@ const Settings = () => {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="firstName">Nome</Label>
-                    <Input id="firstName" defaultValue="Jennifer" />
+                    <Label htmlFor="firstName" className="font-inter">Nome</Label>
+                    <Input id="firstName" defaultValue="Jennifer" className="font-inter" />
                   </div>
                   <div>
-                    <Label htmlFor="lastName">Sobrenome</Label>
-                    <Input id="lastName" defaultValue="Ferreira" />
+                    <Label htmlFor="lastName" className="font-inter">Sobrenome</Label>
+                    <Input id="lastName" defaultValue="Ferreira" className="font-inter" />
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" defaultValue="fjennifer393@gmail.com" />
+                  <Label htmlFor="email" className="font-inter">Email</Label>
+                  <Input id="email" type="email" defaultValue="fjennifer393@gmail.com" className="font-inter" />
                 </div>
-                <Button className="bg-gradient-to-r from-green-500 to-blue-500">
+                <Button className="bg-gradient-to-r from-green-500 to-blue-500 font-inter">
                   Salvar Alterações
                 </Button>
               </CardContent>
             </Card>
+          </motion.div>
 
-            {/* Notificações */}
-            <Card className="glass-card border-0 shadow-lg">
+          {/* Notificações */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <Card className="glass-card border-0 shadow-lg dark:bg-gray-800/50">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center space-x-2 font-poppins">
                   <Bell className="w-5 h-5 text-nutria-600" />
                   <span>Notificações</span>
                 </CardTitle>
@@ -60,34 +72,40 @@ const Settings = () => {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-medium">Lembrete de refeições</div>
-                    <div className="text-sm text-gray-500">Receba lembretes para registrar suas refeições</div>
+                    <div className="font-medium font-inter">Lembrete de refeições</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 font-inter">Receba lembretes para registrar suas refeições</div>
                   </div>
                   <Switch defaultChecked />
                 </div>
-                <Separator />
+                <Separator className="dark:bg-gray-700" />
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-medium">Relatórios semanais</div>
-                    <div className="text-sm text-gray-500">Receba resumos do seu progresso semanal</div>
+                    <div className="font-medium font-inter">Relatórios semanais</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 font-inter">Receba resumos do seu progresso semanal</div>
                   </div>
                   <Switch defaultChecked />
                 </div>
-                <Separator />
+                <Separator className="dark:bg-gray-700" />
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-medium">Dicas nutricionais</div>
-                    <div className="text-sm text-gray-500">Receba dicas personalizadas de nutrição</div>
+                    <div className="font-medium font-inter">Dicas nutricionais</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 font-inter">Receba dicas personalizadas de nutrição</div>
                   </div>
                   <Switch />
                 </div>
               </CardContent>
             </Card>
+          </motion.div>
 
-            {/* Privacidade */}
-            <Card className="glass-card border-0 shadow-lg">
+          {/* Privacidade */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <Card className="glass-card border-0 shadow-lg dark:bg-gray-800/50">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center space-x-2 font-poppins">
                   <Shield className="w-5 h-5 text-nutria-600" />
                   <span>Privacidade e Segurança</span>
                 </CardTitle>
@@ -95,68 +113,96 @@ const Settings = () => {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-medium">Perfil público</div>
-                    <div className="text-sm text-gray-500">Permitir que outros usuários vejam seu progresso</div>
+                    <div className="font-medium font-inter">Perfil público</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 font-inter">Permitir que outros usuários vejam seu progresso</div>
                   </div>
                   <Switch />
                 </div>
-                <Separator />
+                <Separator className="dark:bg-gray-700" />
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-medium">Compartilhar dados para pesquisa</div>
-                    <div className="text-sm text-gray-500">Contribuir anonimamente para pesquisas nutricionais</div>
+                    <div className="font-medium font-inter">Compartilhar dados para pesquisa</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 font-inter">Contribuir anonimamente para pesquisas nutricionais</div>
                   </div>
                   <Switch />
                 </div>
-                <Separator />
-                <Button variant="outline" className="w-full">
+                <Separator className="dark:bg-gray-700" />
+                <Button variant="outline" className="w-full font-inter">
                   Alterar Senha
                 </Button>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
+        </div>
 
-          <div className="space-y-6">
-            {/* Aparência */}
-            <Card className="glass-card border-0 shadow-lg">
+        <div className="space-y-6">
+          {/* Aparência */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <Card className="glass-card border-0 shadow-lg dark:bg-gray-800/50">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center space-x-2 font-poppins">
                   <Palette className="w-5 h-5 text-nutria-600" />
                   <span>Aparência</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label>Tema</Label>
+                  <Label className="font-inter">Tema</Label>
                   <div className="grid grid-cols-2 gap-2 mt-2">
-                    <Button variant="outline" size="sm">Claro</Button>
-                    <Button variant="outline" size="sm">Escuro</Button>
+                    <Button 
+                      variant={theme === 'light' ? 'default' : 'outline'} 
+                      size="sm" 
+                      onClick={() => theme === 'dark' && toggleTheme()}
+                      className="font-inter"
+                    >
+                      <Sun className="w-4 h-4 mr-2" />
+                      Claro
+                    </Button>
+                    <Button 
+                      variant={theme === 'dark' ? 'default' : 'outline'} 
+                      size="sm"
+                      onClick={() => theme === 'light' && toggleTheme()}
+                      className="font-inter"
+                    >
+                      <Moon className="w-4 h-4 mr-2" />
+                      Escuro
+                    </Button>
                   </div>
                 </div>
               </CardContent>
             </Card>
+          </motion.div>
 
-            {/* Dados */}
-            <Card className="glass-card border-0 shadow-lg">
+          {/* Dados */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <Card className="glass-card border-0 shadow-lg dark:bg-gray-800/50">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center space-x-2 font-poppins">
                   <Database className="w-5 h-5 text-nutria-600" />
                   <span>Seus Dados</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full font-inter">
                   Exportar Dados
                 </Button>
-                <Button variant="destructive" className="w-full">
+                <Button variant="destructive" className="w-full font-inter">
                   Excluir Conta
                 </Button>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

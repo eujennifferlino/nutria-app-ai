@@ -1,7 +1,11 @@
 
-import { Calendar, Clock, Utensils } from "lucide-react";
+import { Calendar, Clock, Utensils, Filter } from "lucide-react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import PageWrapper from "@/components/PageWrapper";
 
 const History = () => {
   // Dados simulados do histórico
@@ -29,66 +33,136 @@ const History = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-nutria-50 via-blue-50 to-purple-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Histórico de Refeições</h1>
-          <p className="text-gray-600">
-            Acompanhe seu progresso nutricional ao longo do tempo
-          </p>
-        </div>
+    <PageWrapper 
+      title="Histórico de Refeições" 
+      subtitle="Acompanhe seu progresso nutricional ao longo do tempo"
+      showBackButton={true}
+    >
+      {/* Filters Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-6"
+      >
+        <Card className="glass-card border-0 shadow-lg dark:bg-gray-800/50">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2 font-poppins">
+              <Filter className="w-5 h-5 text-nutria-600" />
+              <span>Filtros</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div>
+                <label className="text-sm font-medium mb-2 block font-inter">Buscar por nome</label>
+                <Input 
+                  placeholder="Buscar refeição..." 
+                  className="font-inter"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-2 block font-inter">Data</label>
+                <Input 
+                  type="date" 
+                  className="font-inter"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-2 block font-inter">Tipo de refeição</label>
+                <Select>
+                  <SelectTrigger className="font-inter">
+                    <SelectValue placeholder="Todos os tipos" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todos os tipos</SelectItem>
+                    <SelectItem value="breakfast">Café da Manhã</SelectItem>
+                    <SelectItem value="lunch">Almoço</SelectItem>
+                    <SelectItem value="dinner">Jantar</SelectItem>
+                    <SelectItem value="snack">Lanche</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
 
-        <div className="space-y-6">
-          {mealHistory.map((day, dayIndex) => (
-            <Card key={dayIndex} className="glass-card border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <Calendar className="w-5 h-5 text-nutria-600" />
-                    <span>{new Date(day.date).toLocaleDateString('pt-BR', { 
-                      weekday: 'long', 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    })}</span>
-                  </div>
-                  <Badge className="bg-nutria-100 text-nutria-700">
-                    {day.totalCalories} cal total
-                  </Badge>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {day.meals.map((meal, mealIndex) => (
-                    <div key={mealIndex} className="p-4 rounded-lg bg-white/50 hover:bg-white/70 transition-colors">
-                      <div className="flex items-center space-x-2 mb-3">
-                        <Utensils className="w-4 h-4 text-nutria-600" />
-                        <span className="font-medium">{meal.name}</span>
-                      </div>
-                      
-                      <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                        <Clock className="w-3 h-3" />
-                        <span>{meal.time}</span>
-                        <span>•</span>
-                        <span className="font-medium">{meal.calories} cal</span>
-                      </div>
-                      
-                      <div className="space-y-1">
-                        {meal.items.map((item, itemIndex) => (
-                          <div key={itemIndex} className="text-xs text-gray-500">
-                            • {item}
-                          </div>
-                        ))}
-                      </div>
+      {/* Meals History */}
+      <div className="space-y-6">
+        {mealHistory.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center py-12"
+          >
+            <Utensils className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 font-poppins">Nenhuma refeição encontrada</h3>
+            <p className="text-gray-500 dark:text-gray-400 font-inter">
+              Comece adicionando sua primeira refeição
+            </p>
+          </motion.div>
+        ) : (
+          mealHistory.map((day, dayIndex) => (
+            <motion.div
+              key={dayIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: dayIndex * 0.1 }}
+            >
+              <Card className="glass-card border-0 shadow-lg dark:bg-gray-800/50">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between font-poppins">
+                    <div className="flex items-center space-x-2">
+                      <Calendar className="w-5 h-5 text-nutria-600" />
+                      <span>{new Date(day.date).toLocaleDateString('pt-BR', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}</span>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                    <Badge className="bg-nutria-100 text-nutria-700 dark:bg-nutria-800 dark:text-nutria-200 font-inter">
+                      {day.totalCalories} cal total
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {day.meals.map((meal, mealIndex) => (
+                      <motion.div 
+                        key={mealIndex} 
+                        className="p-4 rounded-lg bg-white/50 dark:bg-gray-700/30 hover:bg-white/70 dark:hover:bg-gray-700/50 transition-colors"
+                        whileHover={{ scale: 1.02 }}
+                      >
+                        <div className="flex items-center space-x-2 mb-3">
+                          <Utensils className="w-4 h-4 text-nutria-600" />
+                          <span className="font-medium font-inter">{meal.name}</span>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-2 font-inter">
+                          <Clock className="w-3 h-3" />
+                          <span>{meal.time}</span>
+                          <span>•</span>
+                          <span className="font-medium">{meal.calories} cal</span>
+                        </div>
+                        
+                        <div className="space-y-1">
+                          {meal.items.map((item, itemIndex) => (
+                            <div key={itemIndex} className="text-xs text-gray-500 dark:text-gray-400 font-inter">
+                              • {item}
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))
+        )}
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 
