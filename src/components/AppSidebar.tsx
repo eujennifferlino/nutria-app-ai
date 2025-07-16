@@ -12,7 +12,8 @@ import {
   Utensils,
   ChevronDown,
   Moon,
-  Sun
+  Sun,
+  Menu
 } from "lucide-react";
 import {
   Sidebar,
@@ -25,6 +26,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -88,39 +90,56 @@ export function AppSidebar() {
     <Sidebar className="border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
       <SidebarHeader className="p-4">
         <motion.div 
-          className="flex items-center justify-center space-x-2"
+          className="flex items-center justify-between"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <motion.div 
-            className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Utensils className="w-5 h-5 text-white" />
-          </motion.div>
-          <AnimatePresence>
-            {!isCollapsed && (
-              <motion.span 
-                initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: "auto" }}
-                exit={{ opacity: 0, width: 0 }}
-                transition={{ duration: 0.2 }}
-                className="text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent font-poppins"
-              >
-                Nutria
-              </motion.span>
-            )}
-          </AnimatePresence>
+          <div className="flex items-center space-x-2">
+            <motion.div 
+              className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Utensils className="w-5 h-5 text-white" />
+            </motion.div>
+            <AnimatePresence>
+              {!isCollapsed && (
+                <motion.span 
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: "auto" }}
+                  exit={{ opacity: 0, width: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent font-poppins"
+                >
+                  Nutria
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
+          
+          <SidebarTrigger className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
+            <Menu className="w-4 h-4" />
+          </SidebarTrigger>
         </motion.div>
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className={isCollapsed ? "sr-only" : "font-inter"}>
-            Principal
-          </SidebarGroupLabel>
+          <AnimatePresence>
+            {!isCollapsed && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <SidebarGroupLabel className="font-inter">
+                  Principal
+                </SidebarGroupLabel>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <SidebarGroupContent>
             <SidebarMenu>
               {mainNavItems.map((item, index) => (
@@ -130,10 +149,26 @@ export function AppSidebar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <SidebarMenuButton asChild className={getNavClassName(item.url)}>
+                    <SidebarMenuButton 
+                      asChild 
+                      className={getNavClassName(item.url)}
+                      tooltip={isCollapsed ? item.title : undefined}
+                    >
                       <NavLink to={item.url} className="flex items-center font-inter">
                         <item.icon className="w-5 h-5" />
-                        {!isCollapsed && <span className="ml-3">{item.title}</span>}
+                        <AnimatePresence>
+                          {!isCollapsed && (
+                            <motion.span 
+                              initial={{ opacity: 0, width: 0 }}
+                              animate={{ opacity: 1, width: "auto" }}
+                              exit={{ opacity: 0, width: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="ml-3"
+                            >
+                              {item.title}
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
                       </NavLink>
                     </SidebarMenuButton>
                   </motion.div>
@@ -146,17 +181,44 @@ export function AppSidebar() {
         <Separator className="my-2 bg-gray-200 dark:bg-gray-700" />
 
         <SidebarGroup>
-          <SidebarGroupLabel className={isCollapsed ? "sr-only" : "font-inter"}>
-            Configurações
-          </SidebarGroupLabel>
+          <AnimatePresence>
+            {!isCollapsed && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <SidebarGroupLabel className="font-inter">
+                  Configurações
+                </SidebarGroupLabel>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <SidebarGroupContent>
             <SidebarMenu>
               {settingsNavItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className={getNavClassName(item.url)}>
+                  <SidebarMenuButton 
+                    asChild 
+                    className={getNavClassName(item.url)}
+                    tooltip={isCollapsed ? item.title : undefined}
+                  >
                     <NavLink to={item.url} className="flex items-center font-inter">
                       <item.icon className="w-5 h-5" />
-                      {!isCollapsed && <span className="ml-3">{item.title}</span>}
+                      <AnimatePresence>
+                        {!isCollapsed && (
+                          <motion.span 
+                            initial={{ opacity: 0, width: 0 }}
+                            animate={{ opacity: 1, width: "auto" }}
+                            exit={{ opacity: 0, width: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="ml-3"
+                          >
+                            {item.title}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

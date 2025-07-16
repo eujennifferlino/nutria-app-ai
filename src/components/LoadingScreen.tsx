@@ -31,9 +31,6 @@ const LoadingScreen = () => {
           transition={{ delay: 0.2 }}
           className="text-center"
         >
-          <h2 className="text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
-            Nutria
-          </h2>
           <div className="flex space-x-1">
             {[0, 1, 2].map((i) => (
               <motion.div

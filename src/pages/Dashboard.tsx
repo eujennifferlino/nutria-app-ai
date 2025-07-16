@@ -18,7 +18,7 @@ import {
   Clock
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset,  } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 
 const Dashboard = () => {
@@ -97,7 +97,6 @@ const Dashboard = () => {
             <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-700/20">
               <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <SidebarTrigger />
                   <Badge className="bg-nutria-100 text-nutria-700 dark:bg-nutria-800 dark:text-nutria-200 font-inter">
                     🔥 {userStats.streak} dias seguidos
                   </Badge>
