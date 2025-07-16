@@ -13,7 +13,7 @@ import {
   ChevronDown,
   Moon,
   Sun,
-  Menu
+  AlignJustify
 } from "lucide-react";
 import {
   Sidebar,
@@ -119,7 +119,7 @@ export function AppSidebar() {
           </div>
           
           <SidebarTrigger className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
-            <Menu className="w-4 h-4" />
+            <AlignJustify className="w-4 h-4" />
           </SidebarTrigger>
         </motion.div>
       </SidebarHeader>
@@ -155,7 +155,7 @@ export function AppSidebar() {
                       tooltip={isCollapsed ? item.title : undefined}
                     >
                       <NavLink to={item.url} className="flex items-center font-inter">
-                        <item.icon className="w-5 h-5" />
+                        <item.icon className="w-5 h-5 shrink-0" />
                         <AnimatePresence>
                           {!isCollapsed && (
                             <motion.span 
@@ -205,7 +205,7 @@ export function AppSidebar() {
                     tooltip={isCollapsed ? item.title : undefined}
                   >
                     <NavLink to={item.url} className="flex items-center font-inter">
-                      <item.icon className="w-5 h-5" />
+                      <item.icon className="w-5 h-5 shrink-0" />
                       <AnimatePresence>
                         {!isCollapsed && (
                           <motion.span 
@@ -230,7 +230,7 @@ export function AppSidebar() {
 
       <SidebarFooter className="p-4">
         <div className="flex items-center space-x-3">
-          <Avatar className="w-8 h-8">
+          <Avatar className="w-8 h-8 shrink-0">
             <AvatarFallback className="bg-nutria-100 text-nutria-700 dark:bg-nutria-800 dark:text-nutria-200">
               JF
             </AvatarFallback>
