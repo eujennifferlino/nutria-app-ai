@@ -2,6 +2,7 @@
 
 <div align="center">
   <p><em>Controle sua alimentação com Inteligência Artificial</em></p>
+  <p><strong>🚀 Deploy:</strong> <a href="https://nutria-app-ai.vercel.app" target="_blank">nutria-app-ai.vercel.app</a></p>
 </div>
 
 ## 📋 Índice
